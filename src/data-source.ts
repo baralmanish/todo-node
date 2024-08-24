@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import { DataSource } from "typeorm";
 
 import { User } from "./entities/User";
+import { Todo } from "./entities/Todo";
 
 dotenv.config();
 
@@ -15,5 +16,5 @@ export const AppDataSource = new DataSource({
   database: process.env.POSTGRES_DB as string,
   synchronize: true,
   logging: true,
-  entities: [User]
+  entities: [User, Todo]
 });
