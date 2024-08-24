@@ -1,21 +1,31 @@
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 
 import { User } from "../entities/User";
 import { generateToken } from "../utils/auth";
 import UserService from "../services/userService";
 
 export const register = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   const requestedUser = req.body as User;
 
   try {
-    const existingUser = await UserService.getUserByUsername(requestedUser.lastName);
+    const existingUser = await UserService.getUserByUsername(requestedUser.username);
     if (existingUser) {
       return res.status(400).json({ message: "Username already exists" });
     }
 
     const user = await UserService.createUser(requestedUser);
-    return res.status(201).json({ id: user.id, username: user.username });
+    return res.status(201).json({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username
+    });
   } catch (error) {
     if (error instanceof Error) {
       return res.status(500).json({ message: error.message });
@@ -26,6 +36,11 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   const { username, password } = req.body;
 
   try {

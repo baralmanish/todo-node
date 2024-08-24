@@ -2,8 +2,9 @@ import express, { Request, Response } from "express";
 import session from "express-session";
 import bodyParser from "body-parser";
 
-import { JWT_SECRET } from "./utils/constants";
+import authRoutes from "./routes/authRoutes";
 import { AppDataSource } from "./data-source";
+import { JWT_SECRET } from "./utils/constants";
 
 // Specify the port number for the server
 const port: number = 3001;
@@ -30,6 +31,8 @@ const startServer = async () => {
       // Send a response to the client
       res.send("Hello, TypeScript + Node.js + Express!");
     });
+
+    app.use("/api/auth", authRoutes);
 
     // Start the server and listen on the specified port
     app.listen(port, () => {
