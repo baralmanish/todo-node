@@ -35,7 +35,11 @@ describe("UserController", () => {
     await userController.register(req as Request, res as Response);
 
     expect(res.status).toHaveBeenCalledWith(201);
-    expect(res.json).toHaveBeenCalledWith({ id: 1, username: userData.username });
+    expect(res.json).toHaveBeenCalledWith({
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      username: userData.username
+    });
   });
 
   it("should return status 400 if username already exists", async () => {
