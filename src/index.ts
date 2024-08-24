@@ -3,6 +3,7 @@ import session from "express-session";
 import bodyParser from "body-parser";
 
 import authRoutes from "./routes/authRoutes";
+import todoRoutes from "./routes/todoRoutes";
 import { AppDataSource } from "./data-source";
 import { JWT_SECRET } from "./utils/constants";
 
@@ -33,6 +34,7 @@ const startServer = async () => {
     });
 
     app.use("/api/auth", authRoutes);
+    app.use("/api/todo", todoRoutes);
 
     // Start the server and listen on the specified port
     app.listen(port, () => {
