@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres
+    restart: always
+    env_file:
+      - .env.local
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  app:
+    container_name: todo-node-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/home/node/app/src
+    expose:
+      - "3001"
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    env_file:
+      - .env.local
+    command: npm run dev
+
+volumes:
+  postgres-data:
