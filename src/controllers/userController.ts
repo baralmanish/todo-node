@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 
 import { User } from "../entities/User";
-import { generateToken } from "../utils/user";
+import { generateToken } from "../utils/auth";
 import UserService from "../services/userService";
 
 export const register = async (req: Request, res: Response) => {
@@ -31,7 +31,7 @@ export const login = async (req: Request, res: Response) => {
   try {
     const user = await UserService.getUserByUsername(username);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);

@@ -1,14 +1,14 @@
 import { userRepositoryMock } from "../__mocks__/userRepositoryMock";
 
+import bcrypt from "bcryptjs";
+import { User } from "../../src/entities/User";
+import UserService from "../../src/services/userService";
+
 jest.mock("../../src/data-source", () => ({
   AppDataSource: {
     getRepository: jest.fn().mockReturnValue(userRepositoryMock)
   }
 }));
-
-import bcrypt from "bcryptjs";
-import { User } from "../../src/entities/User";
-import UserService from "../../src/services/userService";
 
 jest.mock("bcryptjs", () => ({
   hash: jest.fn()
