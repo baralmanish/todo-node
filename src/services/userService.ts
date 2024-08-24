@@ -18,8 +18,7 @@ class UserService {
       await this.userRepository.save(user);
 
       return user;
-    } catch (error) {
-      console.error("Failed to create user", error);
+    } catch (_error) {
       throw new Error("Failed to create user");
     }
   }
@@ -27,8 +26,7 @@ class UserService {
   async getUserById(id: number) {
     try {
       return await this.userRepository.findOne({ where: { id } });
-    } catch (error) {
-      console.error("Failed to retrieve user by ID", error);
+    } catch (_error) {
       throw new Error("Failed to retrieve user by ID");
     }
   }
@@ -36,8 +34,7 @@ class UserService {
   async getUserByUsername(username: string) {
     try {
       return await this.userRepository.findOne({ where: { username } });
-    } catch (error) {
-      console.error("Failed to retrieve user by username", error);
+    } catch (_error) {
       throw new Error("Failed to retrieve user by username");
     }
   }
