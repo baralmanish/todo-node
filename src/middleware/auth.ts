@@ -1,11 +1,13 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
+
 import { verifyToken } from "../utils/auth";
+import { IAuthInfoRequest } from "../authRequest";
 
 interface JwtPayload {
-  userId: number;
+  id: number;
 }
 
-export const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateJWT = (req: IAuthInfoRequest, res: Response, next: NextFunction) => {
   const token = req.header("Authorization")?.replace("Bearer ", "");
 
   if (!token) {
@@ -14,7 +16,7 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
 
   try {
     const decoded = verifyToken(token) as JwtPayload;
-    req.userId = decoded.userId;
+    req.userId = decoded.id;
     next();
   } catch (_err) {
     return res.status(401).json({ message: "Invalid token" });
