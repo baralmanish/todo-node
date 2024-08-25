@@ -1,4 +1,5 @@
 import cors from "cors";
+import * as dotenv from "dotenv";
 import bodyParser from "body-parser";
 import session from "express-session";
 import express, { Request, Response } from "express";
@@ -8,10 +9,12 @@ import todoRoutes from "./routes/todoRoutes";
 import { AppDataSource } from "./data-source";
 import { JWT_SECRET } from "./utils/constants";
 
+dotenv.config();
+
 // Specify the port number for the server
 const port: number = 3001;
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: process.env.CLIENT_URL as string,
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
