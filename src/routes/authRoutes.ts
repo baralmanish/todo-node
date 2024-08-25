@@ -37,7 +37,7 @@ const registerValidator = [
   body("password")
     .isLength({ min: 6 })
     .withMessage("The minimum password length is 6 characters.")
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/i)
+    .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,16}$/i)
     .withMessage("Password should be combination of at least one letter, one number and one special character")
 ];
 
