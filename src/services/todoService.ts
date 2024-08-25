@@ -11,7 +11,10 @@ class TodoService {
     let todoRes = await this.todoRepository.find();
 
     if (userId) {
-      todoRes = await this.todoRepository.find({ where: { user: { id: userId } } });
+      todoRes = await this.todoRepository.find({
+        where: { user: { id: userId } },
+        order: { id: "DESC" }
+      });
     }
 
     return todoRes.map((todo) => {
