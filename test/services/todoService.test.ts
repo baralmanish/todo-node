@@ -115,7 +115,10 @@ describe("TodoService", () => {
 
     const result = await TodoService.getTodoByUser(userId);
 
-    expect(todoRepositoryMock.find).toHaveBeenCalledWith({ where: { user: { id: userId } } });
+    expect(todoRepositoryMock.find).toHaveBeenCalledWith({
+      where: { user: { id: userId } },
+      order: { id: "DESC" }
+    });
     expect(result).toEqual(todo);
   });
 });
